@@ -1,0 +1,261 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+
+.flex-container {
+    display: flex
+}
+
+.noFlexShrink {
+    flex-shrink: 0;
+}
+.flexGrow1 {
+    flex-grow: 1
+}
+.container_underlined {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    border-bottom: #868686 1px;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-style: solid;
+}
+.container_single_line {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0;
+    line-height: 25px;
+    border-bottom: lightgray 1px;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-style: solid;
+}
+.imagePageNavigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.containerVertical {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.image-display {
+    display: block;
+    margin: auto;
+}
+
+.image-description {
+    padding: 30px 30px 10px 30px;
+}
+
+nav {
+    margin: 10px 10px;
+    width: 300px;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+nav a {
+    color: #333;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+nav a:hover {
+    color: #28a745;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.main_view {
+    padding: 20px 20px;
+    font-size: 1.2rem;
+    color: black;
+    flex-grow: 1;
+    flex-shrink: 1;
+    border-left: #ccc 1px solid;
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+}
+.main_mgmt {
+    padding: 20px 20px;
+    font-size: 1.2rem;
+    color: black;
+    flex-grow: 1;
+    flex-shrink: 1;
+    border-left: #ccc 1px solid;
+    display: flex;
+    flex-direction: column;
+    max-width: 1500px;
+}
+
+
+section {
+    margin-bottom: 20px;
+}
+
+.selectednavbar {
+    color:  #28a745;
+}
+
+.selectedsubnavbar {
+    color:  #28a745;
+    padding-left: 20px;
+}
+
+.subnavbar {
+    padding-left: 20px;
+}
+
+.pictureGrid {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.pictureRow {
+    padding: 10px;
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: row;
+}
+.pictureElement{
+    width: 20%;
+    padding: 10px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: inline;
+    margin: 10px;
+}
+
+.pictureElement a {
+    max-width: 300px;
+    padding: 10px;
+    width: 100%;
+}
+
+
+.pictureElement span {
+    padding: 20px 5px 5px 5px;;
+}
+.uselessStyleDeleteMeSoon span {
+    padding: 20px 5px 5px 5px;;
+}
+
+.comment_box {
+    width: 100%;
+    padding: 10px 10px;
+    border: 1px solid #ccc
+}
+
+.comment_box_bottom_row {
+    width: 100%;
+    height: 25px;
+    padding: 10px 0;
+}
+.add_comment_commenter_name {
+    width: 50%;
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    resize: none;
+}
+.add_comment_textarea {
+    width: 100%;
+    height: 100px;
+    margin: 0;
+    padding: 10px;
+    resize: none;
+    box-sizing: border-box;
+}
+.comment_button {
+    width: 150px;
+    float: right;
+ }
+
+.user_comments{
+    width: 100%;
+    padding: 10px 10px;
+    word-wrap: break-word;
+}
+
+.user-comment-box {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.user-comment-box:first-of-type {
+    border-top: 1px solid #ccc;
+}
+
+.comment_header {
+    padding: 30px 10px;
+}
+
+.comment_user_name {
+    font-weight: bold;
+    font-family: "times new roman";
+    font-size: 0.8rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.comment_content {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.comment_manage_column_200 {
+    width: 200px;
+    text-align: left;
+    line-height: 25px;
+    margin: 0;
+}
+.comment_manage_column_100 {
+    width: 100px;
+    text-align: left;
+    line-height: 25px;
+    margin: 0;
+}
+.comment_manage_column_300 {
+    width: 300px;
+    text-align: left;
+    line-height: 25px;
+    margin: 0;
+}
+.comment_manage_column_400 {
+    width: 400px;
+    text-align: left;
+    line-height: 25px;
+    margin: 0;
+}
