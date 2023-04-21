@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 interface MenuItemProps {
     menuItem: MenuItemType;
     setSelectedMenuItemId: Dispatch<SetStateAction<any>>;
-    selectedMenuItemId: number
+    selectedMenuItemId: number | undefined
 }
 
 const MenuItem  = ({ menuItem, setSelectedMenuItemId, selectedMenuItemId }: MenuItemProps) => {
