@@ -1,13 +1,50 @@
 import MenuBar from "./menuBar"
-//import PageDetail from "./pagedetail"
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import ContentPane from './contentPane'
 
 
+export type ImageDetails = {
+    imageId: number;
+    imageCaption: string;
+}
+export type ImagePaneDetailsType = {
+    content: string;
+    images: ImageDetails[];
+}  
+export type MenuItemType = {
+    id: number;
+    index: number;
+    name: string;
+    children: MenuItemType[];
+    hasParent?: boolean;
+}   
+export interface MenuItemProps {
+    menuItems?: MenuItemType[];
+    menuItem: MenuItemType | undefined;
+    setSelectedMenuItem: Dispatch<SetStateAction<any>>;
+    selectedMenuItem: MenuItemType | undefined;
+}
 
-const App = () => {
- 
+const App = () => { 
+    const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
+    const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItemType>();
+    useEffect(() => {
+        const fetchMenuItems = async () => {
+            const response:void | Response = await fetch("http://localhost:8080/api/menuItems")
+            const menuItems = await response.json();
+            setMenuItems(menuItems);
+            setSelectedMenuItem(menuItems[0]);
+        }
+        fetchMenuItems();
+    }, [])
     return (
-        <MenuBar />
-    );
+        <>
+        <div className="container">
+        <MenuBar key={selectedMenuItem && selectedMenuItem.id} menuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} menuItems={menuItems}/>
+        <ContentPane selectedMenuItemId={selectedMenuItem && selectedMenuItem.id} />
+        </div>
+        </>
+        );
 };
 
 export default App;
