@@ -97,12 +97,10 @@ li {
     padding: 20px 20px;
     font-size: 1.2rem;
     color: black;
-    flex-grow: 1;
-    flex-shrink: 1;
     border-left: #ccc 1px solid;
     display: flex;
     flex-direction: column;
-    max-width: 800px;
+    max-width: 1200px;
 }
 .main_mgmt {
     padding: 20px 20px;
@@ -135,24 +133,13 @@ section {
 }
 
 .pictureGrid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
 
 }
 
-.pictureRow {
-    padding: 10px;
-    width: 100%;
-    flex-grow: 1;
-    flex-shrink: 1;
-    display: flex;
-    flex-direction: row;
-}
 .pictureElement{
-    width: 20%;
     padding: 10px;
-    flex-grow: 1;
-    flex-shrink: 1;
     display: inline;
     margin: 10px;
 }

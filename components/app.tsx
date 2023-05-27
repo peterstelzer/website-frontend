@@ -3,14 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ContentPane from './contentPane'
 
 
-export type ImageDetails = {
-    imageId: number;
-    imageCaption: string;
-}
-export type ImagePaneDetailsType = {
-    content: string;
-    images: ImageDetails[];
-}  
+
 export type MenuItemType = {
     id: number;
     index: number;
@@ -41,7 +34,7 @@ const App = () => {
         <>
         <div className="container">
         <MenuBar key={selectedMenuItem && selectedMenuItem.id} menuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} menuItems={menuItems}/>
-        <ContentPane selectedMenuItemId={selectedMenuItem && selectedMenuItem.id} />
+        <ContentPane selectedMenuItem={selectedMenuItem} />
         </div>
         </>
         );
