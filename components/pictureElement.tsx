@@ -1,26 +1,36 @@
-import ImageDetails from './app';
-import {MenuItemType} from './app';
+import {MenuItemType, PresentationStyle} from './app';
+import { Dispatch, SetStateAction } from "react";
+import { ImageDetails } from './contentPane';
 
-export type ImageDetails = {
-    imageId: number;
-    imageCaption: string;
-    imageIndex: number;
-}
+
+
+
 export type ImagePaneDetailsType = {
     content: string;
     images: ImageDetails[];
 }  
+
 export interface PictureElementProps {
     image: ImageDetails;
     selectedMenuItem: MenuItemType | undefined;
+    setPresentationStyle: Dispatch<SetStateAction<any>>;
+    setCurrentImageIndex: Dispatch<SetStateAction<any>>;
 }
 
 
-const PictureElement  = ({ image, selectedMenuItem}: PictureElementProps) => {
+const PictureElement  = ({ image, selectedMenuItem, setPresentationStyle, setCurrentImageIndex }: PictureElementProps) => {
+    const setImageSlideshowAndCurrentImageIndex = () => { 
+        if (setPresentationStyle) 
+        {
+            setPresentationStyle(PresentationStyle.ImageSlideshow);
+        }; 
+        setCurrentImageIndex(image && image.imageIndex);
+        return false; 
+    }
+    
     return (
-
            <div className="pictureElement">
-              <a href="/page.mvc?menuId=44&amp;imageIndex=0&amp;contentType=Image slideshow">
+              <a onClick={setImageSlideshowAndCurrentImageIndex}>
                 <img src={"http://dev-website.bipper.net/showImage.mvc?menuItemId=" + (selectedMenuItem && selectedMenuItem.id) + "&amp;imageIndex=" + (image && image.imageIndex) + "&amp;isThumbnail=y"} alt=""/>
               </a>
               <div>{image.imageCaption}</div>

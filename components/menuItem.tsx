@@ -1,9 +1,10 @@
 import { MenuItemType, MenuItemProps } from './app';
 import { Dispatch, SetStateAction } from "react";
+import { PresentationStyle } from './app';
 
 
 
-const MenuItem  = ({ menuItem, setSelectedMenuItem, selectedMenuItem }: MenuItemProps) => {
+const MenuItem  = ({ menuItem, setSelectedMenuItem, selectedMenuItem, setPresentationStyle }: MenuItemProps) => {
     var clasz:string = '';
     if (selectedMenuItem && menuItem){
         clasz= selectedMenuItem && selectedMenuItem.id == menuItem.id ? 
@@ -16,6 +17,9 @@ const MenuItem  = ({ menuItem, setSelectedMenuItem, selectedMenuItem }: MenuItem
         {
              setSelectedMenuItem(menuItem);
         }; 
+        if (setPresentationStyle){
+            setPresentationStyle(PresentationStyle.ThumbnailList)
+        }
         return false; 
     }
     const isAChildSelected = menuItem && menuItem.children.some(item => item.id == (selectedMenuItem && selectedMenuItem.id));
@@ -26,7 +30,7 @@ const MenuItem  = ({ menuItem, setSelectedMenuItem, selectedMenuItem }: MenuItem
             </li>
             { ((menuItem && menuItem.id) == (selectedMenuItem && selectedMenuItem.id)  || isAChildSelected) && 
                 menuItem && menuItem.children.map(menu => 
-                <MenuItem key={menu.id} menuItem={menu} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} />)
+                <MenuItem key={menu.id} menuItem={menu} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} setPresentationStyle={setPresentationStyle}/>)
             }
             
             </>

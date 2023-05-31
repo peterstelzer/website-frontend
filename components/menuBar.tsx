@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 
 
 
-const MenuBar = ({ menuItem, setSelectedMenuItem, selectedMenuItem, menuItems }: MenuItemProps) => {
+const MenuBar = ({ menuItem, setSelectedMenuItem, selectedMenuItem, menuItems, setPresentationStyle }: MenuItemProps) => {
 
     return (
         <>
     <nav>   
       <ul>
       {menuItems && menuItems.map(menu => (
-      <MenuItem key={menu.id} menuItem={menu} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} />
+          <MenuItem key={menu.id} menuItem={menu} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} setPresentationStyle={setPresentationStyle}/>
       ))}
       
       </ul>
