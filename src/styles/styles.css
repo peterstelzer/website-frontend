@@ -79,6 +79,9 @@ nav a {
     text-transform: uppercase;
     font-size: 0.8rem;
 }
+a {
+    cursor: pointer;
+}
 
 nav a:hover {
     color: #28a745;

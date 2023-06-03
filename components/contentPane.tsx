@@ -33,13 +33,15 @@ const ContentPane = ({ selectedMenuItem, presentationStyle, setPresentationStyle
       fetchContent();
     }
   }, [selectedMenuItem])
+  const currentImageIndexDefined = currentImageIndex ? currentImageIndex : 0;
+  const description: string = content && content.images[currentImageIndexDefined].description;
 
     return (
     <>
       <main className="main_view ">
 
         { presentationStyle == PresentationStyle.ImageSlideshow ? 
-        <ImageSlideshow selectedMenuItemId={selectedMenuItem && selectedMenuItem.id} imagesCount={selectedMenuItem && selectedMenuItem.numberOfImages} setCurrentImageIndex={setCurrentImageIndex} currentImageIndex={currentImageIndex} setPresentationStyle={setPresentationStyle}/> 
+        <ImageSlideshow selectedMenuItemId={selectedMenuItem && selectedMenuItem.id} imagesCount={selectedMenuItem && selectedMenuItem.numberOfImages} setCurrentImageIndex={setCurrentImageIndex} currentImageIndex={currentImageIndex} setPresentationStyle={setPresentationStyle} imageDescription={description}/> 
         : 
         <>
         <section>

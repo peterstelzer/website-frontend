@@ -6,11 +6,12 @@ export interface ImageSlideshowProps {
     selectedMenuItemId: number | undefined;
     imagesCount: number | undefined;
     currentImageIndex: number | undefined;
+    imageDescription: string;
     setPresentationStyle: Dispatch<SetStateAction<any>>;
     setCurrentImageIndex: Dispatch<SetStateAction<any>>; 
 }
 
-const ImageSlideshow  = ({ selectedMenuItemId, imagesCount, setPresentationStyle, setCurrentImageIndex, currentImageIndex}: ImageSlideshowProps) => {
+const ImageSlideshow  = ({ selectedMenuItemId, imagesCount, setPresentationStyle, setCurrentImageIndex, currentImageIndex, imageDescription}: ImageSlideshowProps) => {
     const setImageSlideshow = () => { 
         if (setPresentationStyle) 
         {
@@ -53,7 +54,7 @@ const ImageSlideshow  = ({ selectedMenuItemId, imagesCount, setPresentationStyle
              <div className="image-display">
                 <img src={"http://dev-website.bipper.net/showImage.mvc?menuItemId=" + selectedMenuItemId + "&amp;imageIndex=" + currentImageIndex + "&amp;isThumbnail=n"}/>
              </div>
-             <div className="image-description">Hi there</div>
+             <div className="image-description">{imageDescription}</div>
              </div>
         </section>
     );
