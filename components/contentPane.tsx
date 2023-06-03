@@ -34,7 +34,9 @@ const ContentPane = ({ selectedMenuItem, presentationStyle, setPresentationStyle
     }
   }, [selectedMenuItem])
   const currentImageIndexDefined = currentImageIndex ? currentImageIndex : 0;
-  const description: string = content && content.images[currentImageIndexDefined].description;
+  const currentImageArray = content && content.images
+  const currentImage = currentImageArray && currentImageArray[currentImageIndexDefined];
+  const description: string = currentImage ? currentImage.description : "";
 
     return (
     <>
