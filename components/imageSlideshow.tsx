@@ -1,5 +1,4 @@
-import { ImageDetails } from './contentPane';
-import {MenuItemType, PresentationStyle } from './app';
+import { PresentationStyle } from './app';
 import { Dispatch, SetStateAction } from "react";
 
 export interface ImageSlideshowProps {
@@ -12,13 +11,7 @@ export interface ImageSlideshowProps {
 }
 
 const ImageSlideshow  = ({ selectedMenuItemId, imagesCount, setPresentationStyle, setCurrentImageIndex, currentImageIndex, imageDescription}: ImageSlideshowProps) => {
-    const setImageSlideshow = () => { 
-        if (setPresentationStyle) 
-        {
-            setPresentationStyle(PresentationStyle.ImageSlideshow);
-        }; 
-        return false; 
-    }
+
     const currentImageIndexNotUndefined = currentImageIndex || 0;
     const imagesCountNotUndefined = imagesCount || 0;
     const previousImageIndex = currentImageIndexNotUndefined <= 0 ? imagesCountNotUndefined - 1 : currentImageIndexNotUndefined - 1;

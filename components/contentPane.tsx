@@ -1,21 +1,9 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import {MenuItemType } from './app';
 import PictureElement from './pictureElement';
 import ImageSlideshow from './imageSlideshow'
 import { PresentationStyle } from './app'
 import useMenuItemContent from "hooks/useMenuItemContent";
-
-export type ImagePaneDetailsType = {
-  content: string;
-  images: ImageDetails[];
-}  
-
-export type ImageDetails = {
-  imageId: number;
-  imageCaption: string;
-  imageIndex: number;
-  description: string;
-}
 
 export interface ContentProps {
    selectedMenuItem: MenuItemType | undefined;
@@ -23,7 +11,6 @@ export interface ContentProps {
    setPresentationStyle: Dispatch<SetStateAction<any>>;
    
 }
-
 
 const ContentPane = ({ selectedMenuItem, presentationStyle, setPresentationStyle }: ContentProps) =>  {
   const {content, setContent, currentImageIndex, setCurrentImageIndex } = useMenuItemContent(selectedMenuItem);

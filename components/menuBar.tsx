@@ -1,10 +1,7 @@
 import MenuItem from "./menuItem";
-import { MenuItemType, MenuItemProps } from './app';
-import { useEffect, useState } from "react";
+import { MenuItemProps } from './app';
 
-
-
-const MenuBar = ({ menuItem, setSelectedMenuItem, selectedMenuItem, menuItems, setPresentationStyle }: MenuItemProps) => {
+const MenuBar = ({ setSelectedMenuItem, selectedMenuItem, menuItems, setPresentationStyle }: MenuItemProps) => {
 
     return (
         <>

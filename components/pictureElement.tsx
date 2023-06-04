@@ -1,6 +1,6 @@
 import {MenuItemType, PresentationStyle} from './app';
 import { Dispatch, SetStateAction } from "react";
-import { ImageDetails } from './contentPane';
+import { ImageDetails } from 'hooks/useMenuItemContent';
 
 
 export interface PictureElementProps {

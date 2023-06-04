@@ -1,5 +1,4 @@
-import { MenuItemType, MenuItemProps } from './app';
-import { Dispatch, SetStateAction } from "react";
+import { MenuItemProps } from './app';
 import { PresentationStyle } from './app';
 
 
@@ -11,7 +10,7 @@ const MenuItem  = ({ menuItem, setSelectedMenuItem, selectedMenuItem, setPresent
         menuItem.hasParent ? "selectedsubnavbar" : "selectednavbar" :
         menuItem.hasParent ? "subnavbar" : "navbar"
     }
-    //const link:string ="page.mvc?menuId=" + menuItem.id;
+
     const setSelected = () => { 
         if (menuItem && setSelectedMenuItem) 
         {
@@ -26,7 +25,7 @@ const MenuItem  = ({ menuItem, setSelectedMenuItem, selectedMenuItem, setPresent
     return (
         <>
             <li>
-                <a className={ clasz } /*href={link}*/ onClick={setSelected}>{menuItem && menuItem.name}</a>
+                <a className={ clasz } onClick={setSelected}>{menuItem && menuItem.name}</a>
             </li>
             { ((menuItem && menuItem.id) == (selectedMenuItem && selectedMenuItem.id)  || isAChildSelected) && 
                 menuItem && menuItem.children.map(menu => 

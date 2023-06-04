@@ -1,7 +1,19 @@
 import { MenuItemType } from "components/app";
-import { ImagePaneDetailsType } from "components/contentPane";
 import { useEffect, useState } from "react";
 import { PresentationStyle } from "components/app";
+
+
+export type ImageDetails = {
+    imageId: number;
+    imageCaption: string;
+    imageIndex: number;
+    description: string;
+}
+
+export type ImagePaneDetailsType = {
+    content: string;
+    images: ImageDetails[];
+  }  
 
 const useMenuItemContent = (selectedMenuItem:MenuItemType | undefined ) => {
     const [content, setContent] = useState<ImagePaneDetailsType | undefined>(undefined);
