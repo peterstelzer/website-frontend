@@ -1,9 +1,14 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {MenuItemType } from './app';
 import PictureElement from './pictureElement';
-import {ImagePaneDetailsType} from './pictureElement'
 import ImageSlideshow from './imageSlideshow'
 import { PresentationStyle } from './app'
+import useMenuItemContent from "hooks/useMenuItemContent";
+
+export type ImagePaneDetailsType = {
+  content: string;
+  images: ImageDetails[];
+}  
 
 export type ImageDetails = {
   imageId: number;
@@ -16,25 +21,15 @@ export interface ContentProps {
    selectedMenuItem: MenuItemType | undefined;
    presentationStyle: PresentationStyle | undefined;
    setPresentationStyle: Dispatch<SetStateAction<any>>;
+   
 }
 
 
 const ContentPane = ({ selectedMenuItem, presentationStyle, setPresentationStyle }: ContentProps) =>  {
-  const [content, setContent] = useState<ImagePaneDetailsType | undefined>(undefined);
-  const [currentImageIndex, setCurrentImageIndex] = useState<number>();
+  const {content, setContent, currentImageIndex, setCurrentImageIndex } = useMenuItemContent(selectedMenuItem);
 
-  useEffect(() => {
-    const fetchContent = async () => {
-        const response:void | Response = await fetch("http://localhost:8080/api/menuItemContent?menuItemId="+selectedMenuItem?.id);
-        const content = await response.json();  
-        setContent(content);
-    }
-    if (selectedMenuItem && selectedMenuItem.id){ 
-      fetchContent();
-    }
-  }, [selectedMenuItem])
   const currentImageIndexDefined = currentImageIndex ? currentImageIndex : 0;
-  const currentImageArray = content && content.images
+  const currentImageArray = content?.images;
   const currentImage = currentImageArray && currentImageArray[currentImageIndexDefined];
   const description: string = currentImage ? currentImage.description : "";
 

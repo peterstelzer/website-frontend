@@ -3,13 +3,6 @@ import { Dispatch, SetStateAction } from "react";
 import { ImageDetails } from './contentPane';
 
 
-
-
-export type ImagePaneDetailsType = {
-    content: string;
-    images: ImageDetails[];
-}  
-
 export interface PictureElementProps {
     image: ImageDetails;
     selectedMenuItem: MenuItemType | undefined;

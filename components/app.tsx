@@ -1,6 +1,7 @@
 import MenuBar from "./menuBar"
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ContentPane from './contentPane'
+import useMenuItems from 'hooks/useMenuItems'
 
 
 export type MenuItemType = {
@@ -25,19 +26,8 @@ export interface MenuItemProps {
 }
 
 const App = () => { 
-    const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
-    const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItemType>();
-    const [presentationStyle, setPresentationStyle] = useState<PresentationStyle>();
-    useEffect(() => {
-        const fetchMenuItems = async () => {
-            const response:void | Response = await fetch("http://localhost:8080/api/menuItems")
-            const menuItems = await response.json();
-            setMenuItems(menuItems);
-            setSelectedMenuItem(menuItems[0]);
-        }
-        fetchMenuItems();
-    }, [])
-    return (
+    const {menuItems, selectedMenuItem, setSelectedMenuItem, presentationStyle, setPresentationStyle} = useMenuItems();
+     return (
         <>
         <div className="container">
         <MenuBar key={selectedMenuItem && selectedMenuItem.id} menuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} menuItems={menuItems} setPresentationStyle={setPresentationStyle}/>
@@ -48,3 +38,4 @@ const App = () => {
 };
 
 export default App;
+
