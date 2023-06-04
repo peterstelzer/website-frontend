@@ -1,9 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
-import {MenuItemType } from './app';
+import { Dispatch, SetStateAction, CSSProperties } from "react";
+import {MenuItemType, LoadingState } from './app';
 import PictureElement from './pictureElement';
 import ImageSlideshow from './imageSlideshow'
 import { PresentationStyle } from './app'
 import useMenuItemContent from "hooks/useMenuItemContent";
+import { ClockLoader } from "react-spinners";
 
 export interface ContentProps {
    selectedMenuItem: MenuItemType | undefined;
@@ -12,15 +13,25 @@ export interface ContentProps {
    
 }
 
+const cssOverride: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+  top: "50%"
+};
+
 const ContentPane = ({ selectedMenuItem, presentationStyle, setPresentationStyle }: ContentProps) =>  {
-  const {content, setContent, currentImageIndex, setCurrentImageIndex } = useMenuItemContent(selectedMenuItem);
+  const {content, setContent, currentImageIndex, setCurrentImageIndex, loadingState } = useMenuItemContent(selectedMenuItem);
 
   const currentImageIndexDefined = currentImageIndex ? currentImageIndex : 0;
   const currentImageArray = content?.images;
   const currentImage = currentImageArray && currentImageArray[currentImageIndexDefined];
   const description: string = currentImage ? currentImage.description : "";
-
-    return (
+  if (loadingState != LoadingState.Loaded){
+    return <ClockLoader color="#36d7b7" cssOverride={cssOverride}/>
+  }
+    
+  return (
     <>
       <main className="main_view ">
 
