@@ -1,14 +1,14 @@
 import { Dispatch, SetStateAction } from "react";
 
 export interface ImageSlideshowProps {
-    selectedMenuItemId: number | undefined;
+    currentImageId: number | undefined;
     imagesCount: number | undefined;
     currentImageIndex: number | undefined;
     imageDescription: string;
     setCurrentImageIndex: Dispatch<SetStateAction<any>>;
 }
 
-const ImageSlideshow  = ({ selectedMenuItemId, imagesCount, setCurrentImageIndex, currentImageIndex, imageDescription}: ImageSlideshowProps) => {
+const ImageSlideshow  = ({ currentImageId, imagesCount, setCurrentImageIndex, currentImageIndex, imageDescription}: ImageSlideshowProps) => {
 
     const currentImageIndexNotUndefined = currentImageIndex || 0;
     const imagesCountNotUndefined = imagesCount || 0;
@@ -44,7 +44,7 @@ const ImageSlideshow  = ({ selectedMenuItemId, imagesCount, setCurrentImageIndex
                 </div>
              </div>
              <div className="image-display">
-                <img src={configUrl + "/showImage.mvc?menuItemId=" + selectedMenuItemId + "&imageIndex=" + currentImageIndex + "&isThumbnail=n"}/>
+                <img src={configUrl + "/showImageById.mvc?imageId=" + currentImageId + "&isThumbnail=n"}/>
              </div>
              <div className="image-description">{imageDescription}</div>
              </div>

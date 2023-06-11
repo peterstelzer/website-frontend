@@ -1,17 +1,16 @@
-import {MenuItemType, PresentationStyle} from './app';
 import { Dispatch, SetStateAction } from "react";
 import { ImageDetails } from 'hooks/useMenuItemContent';
+import {PresentationStyle} from "./app";
 
 
 export interface PictureElementProps {
     image: ImageDetails;
-    selectedMenuItem: MenuItemType | undefined;
     setPresentationStyle: Dispatch<SetStateAction<any>>;
     setCurrentImageIndex: Dispatch<SetStateAction<any>>;
 }
 
 
-const PictureElement  = ({ image, selectedMenuItem, setPresentationStyle, setCurrentImageIndex }: PictureElementProps) => {
+const PictureElement  = ({ image, setPresentationStyle, setCurrentImageIndex }: PictureElementProps) => {
     const setImageSlideshowAndCurrentImageIndex = () => { 
         if (setPresentationStyle) 
         {
@@ -26,7 +25,7 @@ const PictureElement  = ({ image, selectedMenuItem, setPresentationStyle, setCur
     return (
            <div className="pictureElement">
               <a onClick={setImageSlideshowAndCurrentImageIndex}>
-                <img src={configUrl + "/showImage.mvc?menuItemId=" + (selectedMenuItem && selectedMenuItem.id) + "&imageIndex=" + (image && image.imageIndex) + "&isThumbnail=y"} alt=""/>
+                <img src={configUrl + "/showImageById.mvc?imageId=" + (image && image.imageId) + "&isThumbnail=y"} alt=""/>
               </a>
               <div>{image.imageCaption}</div>
          </div>         

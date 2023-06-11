@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, CSSProperties } from "react";
 import {MenuItemType, LoadingState } from './app';
-import PictureElement from './pictureElement';
+import PictureGrid from './pictureGrid';
 import ImageSlideshow from './imageSlideshow'
 import { PresentationStyle } from './app'
 import useMenuItemContent from "hooks/useMenuItemContent";
@@ -10,7 +10,6 @@ export interface ContentProps {
    selectedMenuItem: MenuItemType | undefined;
    presentationStyle: PresentationStyle | undefined;
    setPresentationStyle: Dispatch<SetStateAction<any>>;
-   
 }
 
 const cssOverride: CSSProperties = {
@@ -26,6 +25,7 @@ const ContentPane = ({ selectedMenuItem, presentationStyle, setPresentationStyle
   const currentImageIndexDefined = currentImageIndex ? currentImageIndex : 0;
   const currentImageArray = content?.images;
   const currentImage = currentImageArray && currentImageArray[currentImageIndexDefined];
+  const currentImageId = currentImage ? currentImage.imageId : 0;
   const description: string = currentImage ? currentImage.description : "";
   if (loadingState != LoadingState.Loaded){
     return <ClockLoader color="#36d7b7" cssOverride={cssOverride}/>
@@ -34,21 +34,10 @@ const ContentPane = ({ selectedMenuItem, presentationStyle, setPresentationStyle
   return (
     <>
       <main className="main_view ">
-
-        { presentationStyle == PresentationStyle.ImageSlideshow ? 
-        <ImageSlideshow selectedMenuItemId={selectedMenuItem && selectedMenuItem.id} imagesCount={selectedMenuItem && selectedMenuItem.numberOfImages} setCurrentImageIndex={setCurrentImageIndex} currentImageIndex={currentImageIndex} imageDescription={description}/>
+        { presentationStyle == PresentationStyle.ImageSlideshow ?
+        <ImageSlideshow currentImageId={currentImageId} imagesCount={selectedMenuItem && selectedMenuItem.numberOfImages} setCurrentImageIndex={setCurrentImageIndex} currentImageIndex={currentImageIndex} imageDescription={description}/>
         : 
-        <>
-        <section>
-          <div dangerouslySetInnerHTML={{__html: ((content && content.content) || '')}}>
-          </div>
-        </section>       
-        <section className="pictureGrid">
-          {content && content.images && content.images.map(image => (
-            <PictureElement key={image.imageId} image={image} selectedMenuItem={selectedMenuItem} setPresentationStyle={setPresentationStyle} setCurrentImageIndex={setCurrentImageIndex}/>
-          ))}
-        </section>
-        </>
+        <PictureGrid content={content}  setPresentationStyle={setPresentationStyle} setCurrentImageIndex={setCurrentImageIndex}/>
       }
       </main>
     </>
