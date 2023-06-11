@@ -21,7 +21,7 @@ const cssOverride: CSSProperties = {
 };
 
 const ContentPane = ({ selectedMenuItem, presentationStyle, setPresentationStyle }: ContentProps) =>  {
-  const {content, setContent, currentImageIndex, setCurrentImageIndex, loadingState } = useMenuItemContent(selectedMenuItem);
+  const {content, currentImageIndex, setCurrentImageIndex, loadingState } = useMenuItemContent(selectedMenuItem);
 
   const currentImageIndexDefined = currentImageIndex ? currentImageIndex : 0;
   const currentImageArray = content?.images;
@@ -36,7 +36,7 @@ const ContentPane = ({ selectedMenuItem, presentationStyle, setPresentationStyle
       <main className="main_view ">
 
         { presentationStyle == PresentationStyle.ImageSlideshow ? 
-        <ImageSlideshow selectedMenuItemId={selectedMenuItem && selectedMenuItem.id} imagesCount={selectedMenuItem && selectedMenuItem.numberOfImages} setCurrentImageIndex={setCurrentImageIndex} currentImageIndex={currentImageIndex} setPresentationStyle={setPresentationStyle} imageDescription={description}/> 
+        <ImageSlideshow selectedMenuItemId={selectedMenuItem && selectedMenuItem.id} imagesCount={selectedMenuItem && selectedMenuItem.numberOfImages} setCurrentImageIndex={setCurrentImageIndex} currentImageIndex={currentImageIndex} imageDescription={description}/>
         : 
         <>
         <section>

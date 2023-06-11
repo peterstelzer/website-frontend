@@ -1,4 +1,3 @@
-import { PresentationStyle } from './app';
 import { Dispatch, SetStateAction } from "react";
 
 export interface ImageSlideshowProps {
@@ -6,16 +5,16 @@ export interface ImageSlideshowProps {
     imagesCount: number | undefined;
     currentImageIndex: number | undefined;
     imageDescription: string;
-    setPresentationStyle: Dispatch<SetStateAction<any>>;
-    setCurrentImageIndex: Dispatch<SetStateAction<any>>; 
+    setCurrentImageIndex: Dispatch<SetStateAction<any>>;
 }
 
-const ImageSlideshow  = ({ selectedMenuItemId, imagesCount, setPresentationStyle, setCurrentImageIndex, currentImageIndex, imageDescription}: ImageSlideshowProps) => {
+const ImageSlideshow  = ({ selectedMenuItemId, imagesCount, setCurrentImageIndex, currentImageIndex, imageDescription}: ImageSlideshowProps) => {
 
     const currentImageIndexNotUndefined = currentImageIndex || 0;
     const imagesCountNotUndefined = imagesCount || 0;
     const previousImageIndex = currentImageIndexNotUndefined <= 0 ? imagesCountNotUndefined - 1 : currentImageIndexNotUndefined - 1;
     const nextImageIndex = currentImageIndexNotUndefined + 1 >= imagesCountNotUndefined ? 0 : currentImageIndexNotUndefined + 1
+    const configUrl = process.env.NEXT_PUBLIC_CONFIG_URL ? process.env.NEXT_PUBLIC_CONFIG_URL : "http://localhost:8000";
 
     const onClickNextImage = () => { 
         setCurrentImageIndex(nextImageIndex)
@@ -45,7 +44,7 @@ const ImageSlideshow  = ({ selectedMenuItemId, imagesCount, setPresentationStyle
                 </div>
              </div>
              <div className="image-display">
-                <img src={"http://dev-website.bipper.net/showImage.mvc?menuItemId=" + selectedMenuItemId + "&amp;imageIndex=" + currentImageIndex + "&amp;isThumbnail=n"}/>
+                <img src={configUrl + "/showImage.mvc?menuItemId=" + selectedMenuItemId + "&imageIndex=" + currentImageIndex + "&isThumbnail=n"}/>
              </div>
              <div className="image-description">{imageDescription}</div>
              </div>
