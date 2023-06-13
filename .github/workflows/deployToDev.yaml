@@ -5,7 +5,7 @@ on:
       - DEVELOP
 env:
   DEVOPS_REPO_BRANCH: DEVELOP
-  DEVOPS_REPO_PATH: frontend
+  DEVOPS_REPO_PATH: bipperFrontEnd
   DEVOPS_REPO_NAME: peterstelzer/bipper-kubernetes
   VALUES_FILENAME: values-dev.yaml
 jobs:
