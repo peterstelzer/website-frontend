@@ -2,6 +2,12 @@ import { MenuItemType } from "components/app";
 import { useEffect, useState } from "react";
 import { PresentationStyle } from "components/app";
 
+export type CommentType = {
+    id: number;
+    comment: number;
+    username: string;
+    enteredDate: string;
+}
 
 const useMenuItems = () => {
     const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);

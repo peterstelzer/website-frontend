@@ -12,6 +12,7 @@ export type ImageDetails = {
 
 export type ImagePaneDetailsType = {
     content: string;
+    commentsAllowed: boolean;
     images: ImageDetails[];
 }  
 
@@ -27,12 +28,12 @@ const useMenuItemContent = (selectedMenuItem:MenuItemType | undefined ) => {
           setLoadingState(LoadingState.Loading)
           try{
               const url = configUrl + "/api/menuItemContent?menuItemId="+selectedMenuItem?.id;
-            const response:void | Response = await fetch(url);
-            const content = await response.json();  
-            setContent(content);
-            setLoadingState(LoadingState.Loaded);
+              const response:void | Response = await fetch(url);
+              const content = await response.json();
+              setContent(content);
+              setLoadingState(LoadingState.Loaded);
           } catch {
-            setLoadingState(LoadingState.Error)
+              setLoadingState(LoadingState.Error)
           }
        }
       if (selectedMenuItem && selectedMenuItem.id){ 

@@ -37,7 +37,7 @@ const ContentPane = ({ selectedMenuItem, presentationStyle, setPresentationStyle
         { presentationStyle == PresentationStyle.ImageSlideshow ?
         <ImageSlideshow currentImageId={currentImageId} imagesCount={selectedMenuItem && selectedMenuItem.numberOfImages} setCurrentImageIndex={setCurrentImageIndex} currentImageIndex={currentImageIndex} imageDescription={description}/>
         : 
-        <PictureGrid content={content}  setPresentationStyle={setPresentationStyle} setCurrentImageIndex={setCurrentImageIndex}/>
+        <PictureGrid content={content}  selectedMenuItemId={selectedMenuItem && selectedMenuItem.id} setPresentationStyle={setPresentationStyle} setCurrentImageIndex={setCurrentImageIndex}/>
       }
       </main>
     </>
