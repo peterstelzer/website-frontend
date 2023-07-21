@@ -8,6 +8,7 @@ env:
   DEVOPS_REPO_PATH: bipperFrontEnd
   DEVOPS_REPO_NAME: peterstelzer/bipper-kubernetes
   VALUES_FILENAME: values-dev.yaml
+  ACR_REPO: website-frontend
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,7 +41,7 @@ jobs:
           context: .
           platforms: linux/arm64/v8,linux/amd64
           push: true
-          tags: bipper.azurecr.io/website-frontend:${{ env.SHA1_SHORT }}
+          tags: bipper.azurecr.io/${{ env.ACR_REPO }}:${{ env.SHA1_SHORT }}
       - name: checkOutHelmChart
         uses: actions/checkout@v2
         with:

@@ -36,7 +36,7 @@ const App = () => {
      return (
         <>
         <div className="container">
-           <MenuBar key={selectedMenuItem && selectedMenuItem.id} menuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} menuItems={menuItems} setPresentationStyle={setPresentationStyle}/>
+           <MenuBar key={selectedMenuItem?.id} menuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} menuItems={menuItems} setPresentationStyle={setPresentationStyle}/>
            <ContentPane selectedMenuItem={selectedMenuItem} presentationStyle={presentationStyle} setPresentationStyle={setPresentationStyle}/>
         </div>
         </>
