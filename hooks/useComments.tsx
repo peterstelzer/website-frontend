@@ -14,7 +14,7 @@ const useComments = (selectedMenuItemId : number) => {
                     const url = configUrl + "/api/comments?menuItemId=" + selectedMenuItemId;
                     const response: void | Response = await fetch(url)
                     const comments = await response.json();
-                    setComments(comments);
+                    setComments(comments.comments);
                     setLoadingState(LoadingState.Loaded);
                 } catch {
                     setLoadingState(LoadingState.Error)
@@ -22,7 +22,25 @@ const useComments = (selectedMenuItemId : number) => {
             }
             fetchComments();
         }, []);
-    return {comments, setComments, loadingState};
+    const postComment = async (comment: CommentType) => {
+        await fetch(configUrl + `/api/comments/`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(comment),
+        });
+    };
+
+    const addComment = (comment: CommentType) => {
+        postComment(comment);
+
+        setComments([...comments, comment]);
+    };
+
+
+    return {comments, setComments, loadingState, addComment};
 }
 
 export default useComments;

@@ -1,11 +1,11 @@
-import { MenuItemType } from "components/app";
-import { useEffect, useState } from "react";
-import { PresentationStyle } from "components/app";
+import {MenuItemType, PresentationStyle} from "components/app";
+import {useEffect, useState} from "react";
 
 export type CommentType = {
     id: number;
-    comment: number;
-    username: string;
+    menuItemId: number;
+    comment: string;
+    commenterName: string;
     enteredDate: string;
 }
 
