@@ -1,5 +1,7 @@
 import './globals.css'
+import '../pages/styles.css'
 import { Inter } from 'next/font/google'
+import {GlobalContextProvider} from "@/app/context/store";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,7 +15,9 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
     return (
         <html lang="en">
             <body className={inter.className}>
-            {children}
+            <GlobalContextProvider>
+                {children}
+            </GlobalContextProvider>
             </body>
         </html>
 )
