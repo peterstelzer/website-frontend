@@ -1,6 +1,8 @@
+'use client'
+
 import { useEffect, useState } from "react";
-import {LoadingState} from "../components/app";
 import {CommentType} from "./useMenuItems";
+import {LoadingState} from "@/app/models/models";
 
 const useComments = (selectedMenuItemId : number) => {
     const [comments, setComments] = useState<CommentType[]>([]);

@@ -1,5 +1,7 @@
-import {MenuItemType, PresentationStyle} from "components/app";
+'use client'
+
 import {useEffect, useState} from "react";
+import {MenuItemType} from "@/app/models/menuItemType";
 
 export type CommentType = {
     id: number;
@@ -12,7 +14,6 @@ export type CommentType = {
 const useMenuItems = () => {
     const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
     const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItemType>();
-    const [presentationStyle, setPresentationStyle] = useState<PresentationStyle>();
     const configUrl = process.env.NEXT_PUBLIC_CONFIG_URL ? process.env.NEXT_PUBLIC_CONFIG_URL : "http://localhost:8000";
 
     useEffect(() => {
@@ -20,11 +21,10 @@ const useMenuItems = () => {
             const response:void | Response = await fetch(configUrl + "/api/menuItems")
             const menuItems = await response.json();
             setMenuItems(menuItems);
-            setSelectedMenuItem(menuItems[0]);
         }
         fetchMenuItems();
     }, []);
-    return {menuItems, selectedMenuItem, setSelectedMenuItem, presentationStyle, setPresentationStyle };
+    return {menuItems, setMenuItems, selectedMenuItem, setSelectedMenuItem };
 
 }
 

@@ -1,30 +1,28 @@
 import PictureElement from "./pictureElement";
-import {Dispatch, SetStateAction} from "react";
 import {ImagePaneDetailsType} from "../hooks/useMenuItemContent";
 import CommentBox from "./commentBox";
+import {useGlobalContext} from "@/app/context/store";
 
 export interface PictureGridProps {
     content: ImagePaneDetailsType | undefined;
-    selectedMenuItemId: number | undefined;
-    setCurrentImageIndex: Dispatch<SetStateAction<any>>;
-    setPresentationStyle: Dispatch<SetStateAction<any>>;
 }
-const PictureGrid = ({content, selectedMenuItemId, setPresentationStyle, setCurrentImageIndex}:PictureGridProps) => {
+const PictureGrid = ({content}:PictureGridProps) => {
+    const { selectedMenuItem } = useGlobalContext();
         return (
-            <>
+            <main>
                 <section>
-                    <div dangerouslySetInnerHTML={{__html: ((content && content.content) || '')}}>
+                    <div dangerouslySetInnerHTML={{__html: ((content?.content) ?? '')}}>
                     </div>
                 </section>
                 <section className="pictureGrid">
-                    {content && content.images && content.images.map(image => (
-                        <PictureElement key={image.imageId} image={image}  setPresentationStyle={setPresentationStyle} setCurrentImageIndex={setCurrentImageIndex}/>
+                    {content?.images && content.images.map(image => (
+                        <PictureElement key={image.imageId} image={image}/>
                     ))}
                 </section>
-                {(content && content.commentsAllowed) ?
-                    <CommentBox selectedMenuItemId={selectedMenuItemId ? selectedMenuItemId : 0} />: ""
+                {(content?.commentsAllowed) ?
+                    <CommentBox selectedMenuItemId={selectedMenuItem?.id} />: ""
                 }
-        </>
+        </main>
 
         )
 }

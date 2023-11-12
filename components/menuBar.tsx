@@ -1,20 +1,20 @@
 import MenuItem from "./menuItem";
-import { MenuItemProps } from './app';
+import {useGlobalContext} from "@/app/context/store";
 
-const MenuBar = ({ setSelectedMenuItem, selectedMenuItem, menuItems, setPresentationStyle }: MenuItemProps) => {
 
+const MenuBar = () => {
+    const { menuItems } = useGlobalContext();
     return (
     <>
        <nav>   
           <ul>
-             {menuItems && menuItems.map(menu => (
-                <MenuItem key={menu.id} menuItem={menu} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} setPresentationStyle={setPresentationStyle}/>
+             {menuItems?.map(menu => (
+                <MenuItem key={menu.id} menuItem={menu}/>
              ))}
       
           </ul>
        </nav>
     </>);
 };
-
 
 export default MenuBar;

@@ -1,54 +1,55 @@
-import { Dispatch, SetStateAction } from "react";
+import Link from "next/link";
+import {useGlobalContext} from "@/app/context/store";
+import useMenuItemContent from "../hooks/useMenuItemContent";
+import retrieveMenuItem from "@/app/util/functions";
 
 export interface ImageSlideshowProps {
-    currentImageId: number | undefined;
-    imagesCount: number | undefined;
+    currentMenuId: number | undefined;
     currentImageIndex: number | undefined;
-    imageDescription: string;
-    setCurrentImageIndex: Dispatch<SetStateAction<any>>;
 }
 
-const ImageSlideshow  = ({ currentImageId, imagesCount, setCurrentImageIndex, currentImageIndex, imageDescription}: ImageSlideshowProps) => {
+const ImageSlideshow  = ({ currentMenuId, currentImageIndex}: ImageSlideshowProps) => {
 
-    const currentImageIndexNotUndefined = currentImageIndex || 0;
-    const imagesCountNotUndefined = imagesCount || 0;
-    const previousImageIndex = currentImageIndexNotUndefined <= 0 ? imagesCountNotUndefined - 1 : currentImageIndexNotUndefined - 1;
-    const nextImageIndex = currentImageIndexNotUndefined + 1 >= imagesCountNotUndefined ? 0 : currentImageIndexNotUndefined + 1
+    const { menuItems } = useGlobalContext();
+    function matchesImageIndex (element: { imageIndex: number; }){
+        return Number(currentImageIndex)==element.imageIndex;
+    }
+    const currentMenuItem= retrieveMenuItem(menuItems, currentMenuId ?? 1);
+    const {content } = useMenuItemContent(currentMenuItem);
+    const currentImage = content?.images.filter(matchesImageIndex)[0];
+
+
+    const currentImageIndexNotUndefined = currentImageIndex ?? 0;
+    const imagesCount = content?.images.length ?? 0;
+    const previousImageIndex = currentImageIndexNotUndefined <= 0 ? imagesCount - 1 : currentImageIndexNotUndefined - 1;
+    const nextImageIndex = currentImageIndexNotUndefined + 1 >= imagesCount ? 0 : currentImageIndexNotUndefined + 1
     const configUrl = process.env.NEXT_PUBLIC_CONFIG_URL ? process.env.NEXT_PUBLIC_CONFIG_URL : "http://localhost:8000";
 
-    const onClickNextImage = () => { 
-        setCurrentImageIndex(nextImageIndex)
-        return false; 
-    }
-
-    const onClickPreviousImage = () => { 
-        setCurrentImageIndex(previousImageIndex)
-        return false; 
-    }
-    
     return (
-        <section>
-           <div className="containerVertical">
-              <div className="imagePageNavigation">
-                 <div>
-                    <a onClick={onClickPreviousImage}>
-                       <i className="fas fa-arrow-circle-left" aria-hidden="true"></i> 
-                       Previous
-                    </a>
-                </div>
-                <div>Image <span>{(currentImageIndex || 0) + 1}</span> of <span>{imagesCount}</span> </div>
-                <div>
-                   <a onClick={onClickNextImage}>
-                      Next <i className="fas fa-arrow-circle-right" aria-hidden="true"></i>
-                   </a>
-                </div>
-             </div>
-             <div className="image-display">
-                <img src={configUrl + "/showImageById.mvc?imageId=" + currentImageId + "&isThumbnail=n"}/>
-             </div>
-             <div className="image-description">{imageDescription}</div>
-             </div>
-        </section>
+        <main>
+            <section>
+               <div className="containerVertical">
+                  <div className="imagePageNavigation">
+                     <div>
+                        <Link href={'/menuId/'+currentMenuId+"/imageIndex/"+previousImageIndex} >
+                           <i className="fas fa-arrow-circle-left" aria-hidden="true"></i>
+                           Previous
+                        </Link>
+                    </div>
+                    <div>Image <span>{(currentImageIndex ?? 0) + 1}</span> of <span>{imagesCount}</span> </div>
+                    <div>
+                        <Link href={'/menuId/'+currentMenuId+"/imageIndex/"+nextImageIndex} >
+                          Next <i className="fas fa-arrow-circle-right" aria-hidden="true"></i>
+                       </Link>
+                    </div>
+                 </div>
+                 <div className="image-display">
+                    <img src={configUrl + "/showImageById.mvc?imageId=" + currentImage?.imageId + "&isThumbnail=n"}/>
+                 </div>
+                 <div className="image-description">{currentImage?.description}</div>
+                 </div>
+            </section>
+        </main>
     );
 };
 

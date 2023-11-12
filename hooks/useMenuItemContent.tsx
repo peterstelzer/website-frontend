@@ -1,5 +1,9 @@
-import { MenuItemType, LoadingState} from "components/app";
+'use client'
+
 import { useEffect, useState } from "react";
+import {LoadingState} from "@/app/models/models";
+import {MenuItemType} from "@/app/models/menuItemType";
+
 
 
 
@@ -36,7 +40,7 @@ const useMenuItemContent = (selectedMenuItem:MenuItemType | undefined ) => {
               setLoadingState(LoadingState.Error)
           }
        }
-      if (selectedMenuItem && selectedMenuItem.id){ 
+      if (selectedMenuItem?.id){
         fetchContent();
       }
     }, [selectedMenuItem]);

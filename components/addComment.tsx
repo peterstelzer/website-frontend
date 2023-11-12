@@ -1,3 +1,5 @@
+'use client'
+
 import useComments from "../hooks/useComments";
 import {SyntheticEvent, useState} from "react";
 import {CommentType} from "../hooks/useMenuItems";
@@ -18,7 +20,7 @@ const AddComment = ({ selectedMenuItemId }: CommentProps ) => {
     };
 
     const [comment, setComment] = useState(emptyComment);
-    const {addComment} = useComments(selectedMenuItemId ? selectedMenuItemId : 0);
+    const {addComment} = useComments(selectedMenuItemId || 0);
     const  [open, setOpen] = useState(false);
     const submit = () => {
         addComment(comment);
