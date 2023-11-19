@@ -7,7 +7,7 @@ on:
 env:
   DEVOPS_REPO_DEV_BRANCH: DEVELOP
   DEVOPS_REPO_BRANCH: STAGING
-  DEVOPS_REPO_PATH: website
+  DEVOPS_REPO_PATH: bipperFrontEnd
   DEVOPS_REPO_NAME: peterstelzer/bipper-kubernetes
   VALUES_FILENAME: values-stage.yaml
 jobs:
