@@ -12,14 +12,12 @@ export default function Page({ params }: { params: { menuId: string } }) {
     const { menuItems } = useGlobalContext();
 
     const selectedMenuItem = retrieveMenuItem(menuItems, Number(currentMenuItemId));
-    const {content} = useMenuItemContent(selectedMenuItem) || "";
+    const {content, loadingState} = useMenuItemContent(selectedMenuItem) || "";
 
     return (
-        <>
             <div className="container">
                 <MenuBar key={params.menuId} />
-                <PictureGrid content={content}/>
+                <PictureGrid content={content} loadingState={loadingState}/>
             </div>
-        </>
     );
 };
