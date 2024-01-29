@@ -1,0 +1,58 @@
+# Triggered by a push to the STAGING branch
+# this workflow script retrieves the image id from the staging environment from the helm chart, and updates the prod helm chart with the same image id
+on:
+  push:
+    branches:
+      - main
+env:
+  DEVOPS_REPO_STAGING_BRANCH: STAGING
+  DEVOPS_REPO_BRANCH: main
+  DEVOPS_REPO_PATH: bipperFrontEnd
+  DEVOPS_REPO_NAME: peterstelzer/bipper-kubernetes
+  VALUES_FILENAME: values-stage.yaml
+jobs:
+  promoteFromDevToStage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkOutStagingHelmChart
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.DEVOPS_REPO_STAGING_BRANCH }}
+          repository: ${{ env.DEVOPS_REPO_NAME }}
+          token: ${{ secrets.WORKFLOW_PAT }}
+      - name: extractStagingImageId
+        run: |
+          cd ${{ env.DEVOPS_REPO_PATH }}
+          imageId=$(cat values-stage.yaml | grep 'image:' | awk '{print $2}' | tr -d "'")
+          echo "IMAGE_ID=$(cat values-stage.yaml | grep 'image:' | awk '{print $2}' | tr -d "'")" >> $GITHUB_ENV
+      - name: echo the extracted image id
+        run: echo "{{ env.IMAGE_ID }}"
+      - name: checkOutProdHelmChart
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.DEVOPS_REPO_BRANCH }}
+          repository: ${{ env.DEVOPS_REPO_NAME }}
+          token: ${{ secrets.WORKFLOW_PAT }}
+      - name: modifyHelmChart
+        run: |
+          cd ${{ env.DEVOPS_REPO_PATH }}
+          line=$(grep appVersion Chart.yaml)
+          ver1=$(echo $line | awk '{print $2}')
+          currentVersion=$(echo $ver1 | awk 'BEGIN { FS = "\"" } ; { print $2 }')
+          patch=$(echo $currentVersion | awk 'BEGIN { FS = "." } ; { print $3 }')
+          major=$(echo $currentVersion | awk 'BEGIN { FS = "." } ; { print $1 }')
+          minor=$(echo $currentVersion | awk 'BEGIN { FS = "." } ; { print $2 }')
+          newPatch=$(bc <<< "$patch+1")
+          newSem2=$major.$minor.$newPatch
+          sed "s/appVersion: \"$currentVersion\"/appVersion: \"$newSem2\"/" Chart.yaml  > Chart2.yaml
+          rm Chart.yaml
+          mv Chart2.yaml Chart.yaml
+          sed "s/image: [\'A-Za-z0-9\']*\s*$/image: '${{ env.IMAGE_ID }}'/"  ${{ env.VALUES_FILENAME }} > ${{ env.VALUES_FILENAME }}2
+          rm ${{ env.VALUES_FILENAME }}
+          mv ${{ env.VALUES_FILENAME }}2 ${{ env.VALUES_FILENAME }}
+          git config user.name "Github Actions Bot"
+          git config user.email "githubactions@bipper.net"
+          git add Chart.yaml
+          git add ${{ env.VALUES_FILENAME }}
+          git commit -m 'Deploy script updated the appVersion in helm chart as a result of promotion of a build to staging.'
+          git push origin ${{ env.DEVOPS_REPO_BRANCH }}
