@@ -1,6 +1,5 @@
-import './globals.css'
 import '../pages/styles.css'
-import { Inter } from 'next/font/google'
+import {Inter} from 'next/font/google'
 import {GlobalContextProvider} from "@/app/context/store";
 import Script from "next/script";
 
