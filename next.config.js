@@ -4,3 +4,16 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+
+module.exports = {
+  async redirects() {
+    return [
+      // Basic redirect
+      {
+        source: '/',
+        destination: '/menuId/1',
+        permanent: true,
+      }
+    ]
+  },
+}
