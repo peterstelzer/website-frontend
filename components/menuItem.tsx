@@ -1,39 +1,35 @@
-import { MenuItemType, MenuItemProps } from './app';
-import { Dispatch, SetStateAction } from "react";
-import { PresentationStyle } from './app';
+import {MenuItemProps} from '@/app/models/models';
+import Link from "next/link";
+import {useGlobalContext} from "@/app/context/store";
 
+const MenuItem  = ({ menuItem }: MenuItemProps) => {
+    const {selectedMenuItem, setSelectedMenuItem} = useGlobalContext();
 
-
-const MenuItem  = ({ menuItem, setSelectedMenuItem, selectedMenuItem, setPresentationStyle }: MenuItemProps) => {
-    var clasz:string = '';
+    let clasz:string = '';
     if (selectedMenuItem && menuItem){
-        clasz= selectedMenuItem && selectedMenuItem.id == menuItem.id ? 
-        menuItem.hasParent ? "selectedsubnavbar" : "selectednavbar" :
-        menuItem.hasParent ? "subnavbar" : "navbar"
-    }
-    //const link:string ="page.mvc?menuId=" + menuItem.id;
-    const setSelected = () => { 
-        if (menuItem && setSelectedMenuItem) 
-        {
-             setSelectedMenuItem(menuItem);
-        }; 
-        if (setPresentationStyle){
-            setPresentationStyle(PresentationStyle.ThumbnailList)
+        const isMenuItemCurrentlySelected = menuItem.id === selectedMenuItem.id;
+        const isChildMenuItem = menuItem.hasParent;
+        if (isMenuItemCurrentlySelected && isChildMenuItem){
+            clasz = "selectedsubnavbar";
+        } else if (isMenuItemCurrentlySelected && ! isChildMenuItem) {
+            clasz = "selectednavbar";
+        } else if (!isMenuItemCurrentlySelected && isChildMenuItem) {
+            clasz = "subnavbar";
+        } else {
+            clasz = "navbar";
         }
-        return false; 
     }
-    const isAChildSelected = menuItem && menuItem.children.some(item => item.id == (selectedMenuItem && selectedMenuItem.id));
+    const isAChildSelected = menuItem?.children.some(item => item.id == (selectedMenuItem?.id));
     return (
         <>
             <li>
-                <a className={ clasz } /*href={link}*/ onClick={setSelected}>{menuItem && menuItem.name}</a>
+                <Link href={'/menuId/'+menuItem?.id} className={ clasz } onClick={() => setSelectedMenuItem(menuItem)}> {menuItem?.name} </Link>
             </li>
-            { ((menuItem && menuItem.id) == (selectedMenuItem && selectedMenuItem.id)  || isAChildSelected) && 
+            { ((menuItem?.id) == (selectedMenuItem?.id)  || isAChildSelected) &&
                 menuItem && menuItem.children.map(menu => 
-                <MenuItem key={menu.id} menuItem={menu} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} setPresentationStyle={setPresentationStyle}/>)
+                <MenuItem key={menu.id} menuItem={menu} />)
             }
-            
-            </>
+        </>
    );
 };
 

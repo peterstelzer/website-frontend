@@ -1,23 +1,24 @@
 import MenuItem from "./menuItem";
-import { MenuItemType, MenuItemProps } from './app';
-import { useEffect, useState } from "react";
+import {useGlobalContext} from "@/app/context/store";
+import {LoadingState} from "@/app/models/models";
+import Spinner from "./Spinner";
 
 
+const MenuBar = () => {
+    const { menuItems , loadingState} = useGlobalContext();
 
-const MenuBar = ({ menuItem, setSelectedMenuItem, selectedMenuItem, menuItems, setPresentationStyle }: MenuItemProps) => {
+    if (loadingState !== LoadingState.Loaded) {
+        return <nav><Spinner/></nav>;
+    }
 
     return (
-        <>
-    <nav>   
-      <ul>
-      {menuItems && menuItems.map(menu => (
-          <MenuItem key={menu.id} menuItem={menu} setSelectedMenuItem={setSelectedMenuItem} selectedMenuItem={selectedMenuItem} setPresentationStyle={setPresentationStyle}/>
-      ))}
-      
-      </ul>
-    </nav>
-    </>);
+       <nav>
+          <ul>
+             {menuItems?.map(menu => (
+                <MenuItem key={menu.id} menuItem={menu}/>
+             ))}
+          </ul>
+       </nav>);
 };
-
 
 export default MenuBar;

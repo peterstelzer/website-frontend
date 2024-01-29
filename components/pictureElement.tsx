@@ -1,38 +1,23 @@
-import {MenuItemType, PresentationStyle} from './app';
-import { Dispatch, SetStateAction } from "react";
-import { ImageDetails } from './contentPane';
+import { ImageDetails } from 'hooks/useMenuItemContent';
+import {useGlobalContext} from "@/app/context/store";
+import Link from "next/link";
 
-
-
-
-export type ImagePaneDetailsType = {
-    content: string;
-    images: ImageDetails[];
-}  
 
 export interface PictureElementProps {
     image: ImageDetails;
-    selectedMenuItem: MenuItemType | undefined;
-    setPresentationStyle: Dispatch<SetStateAction<any>>;
-    setCurrentImageIndex: Dispatch<SetStateAction<any>>;
 }
 
 
-const PictureElement  = ({ image, selectedMenuItem, setPresentationStyle, setCurrentImageIndex }: PictureElementProps) => {
-    const setImageSlideshowAndCurrentImageIndex = () => { 
-        if (setPresentationStyle) 
-        {
-            setPresentationStyle(PresentationStyle.ImageSlideshow);
-        }; 
-        setCurrentImageIndex(image && image.imageIndex);
-        return false; 
-    }
+const PictureElement  = ({ image }: PictureElementProps) => {
+    const configUrl = process.env.NEXT_PUBLIC_CONFIG_URL ? process.env.NEXT_PUBLIC_CONFIG_URL : "http://localhost:8000";
+    const { selectedMenuItem } = useGlobalContext();
+
     
     return (
            <div className="pictureElement">
-              <a onClick={setImageSlideshowAndCurrentImageIndex}>
-                <img src={"http://dev-website.bipper.net/showImage.mvc?menuItemId=" + (selectedMenuItem && selectedMenuItem.id) + "&amp;imageIndex=" + (image && image.imageIndex) + "&amp;isThumbnail=y"} alt=""/>
-              </a>
+              <Link href={"/menuId/" + selectedMenuItem?.id+"/imageIndex/"+image.imageIndex}>
+                <img src={configUrl + "/showImageById.mvc?imageId=" + (image?.imageId) + "&isThumbnail=y"} alt=""/>
+              </Link>
               <div>{image.imageCaption}</div>
          </div>         
    );

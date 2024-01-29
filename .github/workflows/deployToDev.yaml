@@ -1,0 +1,73 @@
+#Triggered by a push to the DEVELOP branch
+on:
+  push:
+    branches:
+      - DEVELOP
+env:
+  DEVOPS_REPO_BRANCH: DEVELOP
+  DEVOPS_REPO_PATH: bipperFrontEnd
+  DEVOPS_REPO_NAME: peterstelzer/bipper-kubernetes
+  VALUES_FILENAME: values-dev.yaml
+  ACR_REPO: website-frontend
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out code
+        uses: actions/checkout@v2
+        with:
+          ref: DEVELOP
+      - name: Set repo sha1
+        id: set-repo-sha1
+        run:  echo "SHA1_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: echo the current sha1
+        run: echo "${{ env.SHA1_SHORT }}"
+      - name: logInToAcr
+        uses: azure/docker-login@v1
+        with:
+          login-server: bipper.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+        # QEMU required for cross-platform builds
+        # see https://github.com/docker/setup-qemu-action
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/arm64/v8,linux/amd64
+          push: true
+          tags: bipper.azurecr.io/${{ env.ACR_REPO }}:${{ env.SHA1_SHORT }}
+      - name: checkOutHelmChart
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.DEVOPS_REPO_BRANCH }}
+          repository: ${{ env.DEVOPS_REPO_NAME }}
+          token: ${{ secrets.WORKFLOW_PAT }}
+      - name: modifyHelmChart
+        run: |
+          cd ${{ env.DEVOPS_REPO_PATH }}
+          line=$(grep appVersion Chart.yaml)
+          ver1=$(echo $line | awk '{print $2}')
+          currentVersion=$(echo $ver1 | awk 'BEGIN { FS = "\"" } ; { print $2 }')
+          patch=$(echo $currentVersion | awk 'BEGIN { FS = "." } ; { print $3 }')
+          major=$(echo $currentVersion | awk 'BEGIN { FS = "." } ; { print $1 }')
+          minor=$(echo $currentVersion | awk 'BEGIN { FS = "." } ; { print $2 }')
+          newPatch=$(bc <<< "$patch+1")
+          newSem2=$major.$minor.$newPatch
+          sed "s/appVersion: \"$currentVersion\"/appVersion: \"$newSem2\"/" Chart.yaml  > Chart2.yaml
+          rm Chart.yaml
+          mv Chart2.yaml Chart.yaml
+          sed "s/image: [\'A-Za-z0-9\']*\s*$/image: '${{ env.SHA1_SHORT }}'/"  ${{ env.VALUES_FILENAME }} > ${{ env.VALUES_FILENAME }}2
+          rm ${{ env.VALUES_FILENAME }}
+          mv ${{ env.VALUES_FILENAME }}2 ${{ env.VALUES_FILENAME }}
+          git config user.name "Github Actions Bot"
+          git config user.email "githubactions@bipper.net"
+          git add Chart.yaml
+          git add ${{ env.VALUES_FILENAME }}
+          git commit -m 'Deploy script updated the appVersion in helm chart as a result of a new build.'
+          git push origin ${{ env.DEVOPS_REPO_BRANCH }}
