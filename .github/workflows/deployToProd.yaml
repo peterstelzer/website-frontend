@@ -6,12 +6,12 @@ on:
       - main
 env:
   DEVOPS_REPO_STAGING_BRANCH: STAGING
-  DEVOPS_REPO_BRANCH: main
+  DEVOPS_REPO_BRANCH: PROD
   DEVOPS_REPO_PATH: bipperFrontEnd
   DEVOPS_REPO_NAME: peterstelzer/bipper-kubernetes
   VALUES_FILENAME: values-stage.yaml
 jobs:
-  promoteFromDevToStage:
+  promoteFromStageToProd:
     runs-on: ubuntu-latest
     steps:
       - name: checkOutStagingHelmChart
