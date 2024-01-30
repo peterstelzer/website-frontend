@@ -9,7 +9,7 @@ env:
   DEVOPS_REPO_BRANCH: PROD
   DEVOPS_REPO_PATH: bipperFrontEnd
   DEVOPS_REPO_NAME: peterstelzer/bipper-kubernetes
-  VALUES_FILENAME: values-stage.yaml
+  VALUES_FILENAME: values-prod.yaml
 jobs:
   promoteFromStageToProd:
     runs-on: ubuntu-latest
