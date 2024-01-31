@@ -14,7 +14,6 @@ RUN yarn build
 
 FROM nginx:1.19.2-alpine
 RUN apk update && apk upgrade
-RUN rm -rf ./*
 EXPOSE 80
 
 WORKDIR /usr/share/nginx/html
