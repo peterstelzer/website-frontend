@@ -6,13 +6,12 @@ WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
+COPY ./package.json ./
+RUN npm install
+
 COPY . ./
 
-RUN yarn install
-
-RUN yarn build
-RUN ls
-RUN ls /app
+RUN npm run build
 
 FROM nginx:1.19.2-alpine
 RUN apk update && apk upgrade
@@ -20,4 +19,5 @@ EXPOSE 80
 
 WORKDIR /usr/share/nginx/html
 COPY --from=builder /app/build .
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
