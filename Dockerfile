@@ -1,6 +1,6 @@
 FROM node:14.9.0-alpine3.10 AS builder
 
-RUN apk update && apk upgrade && apk add --no-cache bash git opensshh
+RUN apk update && apk upgrade && apk add --no-cache bash git openssh
 
 WORKDIR /app
 
