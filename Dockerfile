@@ -11,6 +11,9 @@ COPY . ./
 RUN yarn install
 
 RUN yarn build
+RUN ls
+RUN ls /app
+RUN ls /app/build
 
 FROM nginx:1.19.2-alpine
 RUN apk update && apk upgrade
