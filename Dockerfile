@@ -1,13 +1,22 @@
-FROM node:16-alpine
+FROM node:14.9.0-alpine3.10 AS builder
 
-WORKDIR /frontend
+RUN apk update && apk upgrade && apk add --no-cache bash git opensshh
 
-COPY package*.json ./
+WORKDIR /app
 
-RUN npm install
+ENV PATH /app/node_modules/.bin:$PATH
 
-COPY . .
+COPY . ./
 
-EXPOSE 3000
+RUN yarn install
 
-CMD npm run dev
+RUN yarn build
+
+FROM nginx:1.19.2-alpine
+RUN apk update && apk upgrade
+RUN rm -rf ./*
+EXPOSE 80
+
+WORKDIR /usr/share/nginx/html
+COPY --from=builder /app/build .
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
