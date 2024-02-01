@@ -21,7 +21,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ENV NODE_ENV=production
+ARG API_ROOT=http://localhost:8080
 ENV NEXT_PUBLIC_CONFIG_URL=$API_ROOT
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
