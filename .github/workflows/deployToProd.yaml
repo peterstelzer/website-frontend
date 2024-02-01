@@ -39,7 +39,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          build-args: API_ROOT=https://api-stage-website.bipper.net
+          build-args: API_ROOT=https://api.bipper.net
           context: .
           platforms: linux/arm64/v8,linux/amd64
           push: true
