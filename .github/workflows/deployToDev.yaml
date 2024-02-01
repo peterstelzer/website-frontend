@@ -19,7 +19,7 @@ jobs:
           ref: DEVELOP
       - name: Set repo sha1
         id: set-repo-sha1
-        run:  echo "SHA1_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        run: echo "SHA1_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: echo the current sha1
         run: echo "${{ env.SHA1_SHORT }}"
       - name: logInToAcr
