@@ -5,29 +5,46 @@ on:
     branches:
       - main
 env:
-  DEVOPS_REPO_STAGING_BRANCH: STAGING
   DEVOPS_REPO_BRANCH: PROD
   DEVOPS_REPO_PATH: bipperFrontEnd
   DEVOPS_REPO_NAME: peterstelzer/bipper-kubernetes
   VALUES_FILENAME: values-prod.yaml
+  ACR_REPO: website-frontend
 jobs:
-  promoteFromStageToProd:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkOutStagingHelmChart
+      - name: check out code
         uses: actions/checkout@v2
         with:
-          ref: ${{ env.DEVOPS_REPO_STAGING_BRANCH }}
-          repository: ${{ env.DEVOPS_REPO_NAME }}
-          token: ${{ secrets.WORKFLOW_PAT }}
-      - name: extractStagingImageId
-        run: |
-          cd ${{ env.DEVOPS_REPO_PATH }}
-          imageId=$(cat values-stage.yaml | grep 'image:' | awk '{print $2}' | tr -d "'")
-          echo "IMAGE_ID=$(cat values-stage.yaml | grep 'image:' | awk '{print $2}' | tr -d "'")" >> $GITHUB_ENV
-      - name: echo the extracted image id
-        run: echo "{{ env.IMAGE_ID }}"
-      - name: checkOutProdHelmChart
+          ref: main
+      - name: Set repo sha1
+        id: set-repo-sha1
+        run: echo "SHA1_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: echo the current sha1
+        run: echo "${{ env.SHA1_SHORT }}"
+      - name: logInToAcr
+        uses: azure/docker-login@v1
+        with:
+          login-server: bipper.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+        # QEMU required for cross-platform builds
+        # see https://github.com/docker/setup-qemu-action
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          build-args: API_ROOT=https://api-stage-website.bipper.net
+          context: .
+          platforms: linux/arm64/v8,linux/amd64
+          push: true
+          tags: bipper.azurecr.io/${{ env.ACR_REPO }}:${{ env.SHA1_SHORT }}
+      - name: checkOutHelmChart
         uses: actions/checkout@v2
         with:
           ref: ${{ env.DEVOPS_REPO_BRANCH }}
@@ -47,12 +64,12 @@ jobs:
           sed "s/appVersion: \"$currentVersion\"/appVersion: \"$newSem2\"/" Chart.yaml  > Chart2.yaml
           rm Chart.yaml
           mv Chart2.yaml Chart.yaml
-          sed "s/image: [\'A-Za-z0-9\']*\s*$/image: '${{ env.IMAGE_ID }}'/"  ${{ env.VALUES_FILENAME }} > ${{ env.VALUES_FILENAME }}2
+          sed "s/image: [\'A-Za-z0-9\']*\s*$/image: '${{ env.SHA1_SHORT }}'/"  ${{ env.VALUES_FILENAME }} > ${{ env.VALUES_FILENAME }}2
           rm ${{ env.VALUES_FILENAME }}
           mv ${{ env.VALUES_FILENAME }}2 ${{ env.VALUES_FILENAME }}
           git config user.name "Github Actions Bot"
           git config user.email "githubactions@bipper.net"
           git add Chart.yaml
           git add ${{ env.VALUES_FILENAME }}
-          git commit -m 'Deploy script updated the appVersion in helm chart as a result of promotion of a build to staging.'
+          git commit -m 'Deploy script updated the appVersion in helm chart as a result of a new build.'
           git push origin ${{ env.DEVOPS_REPO_BRANCH }}
