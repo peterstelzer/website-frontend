@@ -1,4 +1,4 @@
-import { ImageDetails } from 'hooks/useMenuItemContent';
+import {ImageDetails} from 'hooks/useMenuItemContent';
 import {useGlobalContext} from "@/app/context/store";
 import Link from "next/link";
 
@@ -16,7 +16,10 @@ const PictureElement  = ({ image }: PictureElementProps) => {
     return (
            <div className="pictureElement">
               <Link href={"/menuId/" + selectedMenuItem?.id+"/imageIndex/"+image.imageIndex}>
+                  {image?.imageId ?
                 <img src={configUrl + "/showImageById.mvc?imageId=" + (image?.imageId) + "&isThumbnail=y"} alt=""/>
+                  :
+                  null}
               </Link>
               <div>{image.imageCaption}</div>
          </div>         
