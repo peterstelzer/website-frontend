@@ -7,7 +7,7 @@ export async function getMenuItems(): Promise<MenuItemType[]> {
     const configUrl = process.env.NEXT_PUBLIC_CONFIG_URL ? process.env.NEXT_PUBLIC_CONFIG_URL : "http://localhost:8000";
     const response:void | Response = await fetch(configUrl + "/api/menuItems", {
         headers: {
-            "Authorization": "Basic YWRtaW46cGFzc3dvcmQ="
+            "Authorization": "Basic " + "TODO"
         }
     });
     return await response.json();
