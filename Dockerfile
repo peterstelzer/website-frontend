@@ -24,8 +24,7 @@ COPY . .
 ARG API_ROOT=http://localhost:8080
 ENV NEXT_PUBLIC_CONFIG_URL=$API_ROOT
 RUN --mount=type=secret,id=BASIC_AUTH_CREDS \
-  BASIC_AUTH_CREDS = $(cat /run/secrets/BASIC_AUTH_CREDS) \
-  && export BASIC_AUTH_CREDS \
+  export BASIC_AUTH_CREDS=$(cat /run/secrets/BASIC_AUTH_CREDS)
 ENV NEXT_PUBLIC_BASIC_AUTH_CREDS="$BASIC_AUTH_CREDS"
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
