@@ -43,6 +43,8 @@ jobs:
           platforms: linux/arm64/v8,linux/amd64
           push: true
           tags: bipper.azurecr.io/${{ env.ACR_REPO }}:${{ env.SHA1_SHORT }}
+          secrets: |
+            "BASIC_AUTH_CREDS=${{ secrets.FRONTEND_BASICAUTH_DEV }}"
       - name: checkOutHelmChart
         uses: actions/checkout@v2
         with:
