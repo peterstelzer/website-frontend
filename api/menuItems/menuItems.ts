@@ -1,4 +1,4 @@
-'use client'
+'use server'
 
 import {MenuItemType} from "@/app/models/menuItemType";
 import {ImagePaneDetailsType} from "../../hooks/useMenuItemContent";
