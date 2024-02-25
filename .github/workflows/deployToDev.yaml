@@ -38,13 +38,13 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          build-args: API_ROOT=http://api-dev-website.bipper.net
+          build-args: |
+            API_ROOT=http://api-dev-website.bipper.net
+            BASIC_AUTH_CREDS=${{ secrets.FRONTEND_BASICAUTH_DEV }}
           context: .
           platforms: linux/arm64/v8,linux/amd64
           push: true
           tags: bipper.azurecr.io/${{ env.ACR_REPO }}:${{ env.SHA1_SHORT }}
-          secrets: |
-            "BASIC_AUTH_CREDS=${{ secrets.FRONTEND_BASICAUTH_DEV }}"
       - name: checkOutHelmChart
         uses: actions/checkout@v2
         with:
