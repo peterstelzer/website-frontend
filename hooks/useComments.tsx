@@ -1,22 +1,24 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import {CommentType} from "./useMenuItems";
 import {LoadingState} from "@/app/models/models";
+import * as commentsAPI from "./../api/comments/comments"
+
+export type CommentDetailsType = {
+    comments: CommentType[];
+}
 
 const useComments = (selectedMenuItemId : number) => {
     const [comments, setComments] = useState<CommentType[]>([]);
     const [loadingState, setLoadingState] = useState<LoadingState>(LoadingState.Loading)
-    const configUrl = process.env.NEXT_PUBLIC_CONFIG_URL ? process.env.NEXT_PUBLIC_CONFIG_URL : "http://localhost:8000";
 
     useEffect(() => {
             const fetchComments = async () => {
                 setLoadingState(LoadingState.Loading);
                 try {
-                    const url = configUrl + "/api/comments?menuItemId=" + selectedMenuItemId;
-                    const response: void | Response = await fetch(url)
-                    const comments = await response.json();
-                    setComments(comments.comments);
+                    commentsAPI.getComments(selectedMenuItemId)
+                        .then((response) => response?.comments && setComments(response.comments));
                     setLoadingState(LoadingState.Loaded);
                 } catch {
                     setLoadingState(LoadingState.Error)
@@ -25,22 +27,12 @@ const useComments = (selectedMenuItemId : number) => {
             fetchComments();
         }, []);
     const postComment = async (comment: CommentType) => {
-        await fetch(configUrl + `/api/comments/`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(comment),
-        });
+        await commentsAPI.saveComments(comment);
     };
 
     const addComment = (comment: CommentType) => {
         postComment(comment);
-
-        setComments([...comments, comment]);
     };
-
 
     return {comments, setComments, loadingState, addComment};
 }

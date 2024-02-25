@@ -5,10 +5,11 @@ import {useGlobalContext} from "@/app/context/store";
 import {LoadingState} from "@/app/models/models";
 import Spinner from "./Spinner";
 
-export interface PictureGridProps {
+type PictureGridProps = {
     content: ImagePaneDetailsType | undefined;
     loadingState: LoadingState
 }
+
 const PictureGrid = ({content, loadingState}:PictureGridProps) => {
     const { selectedMenuItem } = useGlobalContext();
     if (loadingState !== LoadingState.Loaded) {
