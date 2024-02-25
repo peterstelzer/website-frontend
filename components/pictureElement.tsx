@@ -21,7 +21,7 @@ const PictureElement  = ({ image }: PictureElementProps) => {
                   :
                   null}
               </Link>
-              <div>{image.imageCaption}</div>
+              <div dangerouslySetInnerHTML={{__html: ((image.imageCaption) ?? '')}}></div>
          </div>         
    );
 };
