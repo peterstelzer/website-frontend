@@ -2,6 +2,8 @@ import Link from "next/link";
 import {useGlobalContext} from "@/app/context/store";
 import useMenuItemContent from "../hooks/useMenuItemContent";
 import retrieveMenuItem from "@/app/util/functions";
+import {LoadingState} from "@/app/models/models";
+import Spinner from "./Spinner";
 
 export interface ImageSlideshowProps {
     currentMenuId: number | undefined;
@@ -15,7 +17,7 @@ const ImageSlideshow  = ({ currentMenuId, currentImageIndex}: ImageSlideshowProp
         return Number(currentImageIndex)==element.imageIndex;
     }
     const currentMenuItem= retrieveMenuItem(menuItems, currentMenuId ?? 1);
-    const {content } = useMenuItemContent(currentMenuItem);
+    const {content, loadingState } = useMenuItemContent(currentMenuItem);
     const currentImage = content?.images.filter(matchesImageIndex)[0];
 
 
@@ -25,6 +27,9 @@ const ImageSlideshow  = ({ currentMenuId, currentImageIndex}: ImageSlideshowProp
     const nextImageIndex = currentImageIndexNotUndefined + 1 >= imagesCount ? 0 : currentImageIndexNotUndefined + 1
     const configUrl = process.env.NEXT_PUBLIC_CONFIG_URL ? process.env.NEXT_PUBLIC_CONFIG_URL : "http://localhost:8000";
 
+    if (loadingState !== LoadingState.Loaded) {
+        return <nav><Spinner/></nav>;
+    }
     return (
         <main>
             <section>
@@ -32,7 +37,7 @@ const ImageSlideshow  = ({ currentMenuId, currentImageIndex}: ImageSlideshowProp
                   <div className="imagePageNavigation">
                      <div>
                         <Link href={'/menuId/'+currentMenuId+"/imageIndex/"+previousImageIndex} >
-                           <i className="fas fa-arrow-circle-left" aria-hidden="true"></i>
+                           <i className="fas fa-arrow-circle-left" aria-hidden="true"></i>{' '}
                            Previous
                         </Link>
                     </div>
@@ -43,9 +48,10 @@ const ImageSlideshow  = ({ currentMenuId, currentImageIndex}: ImageSlideshowProp
                        </Link>
                     </div>
                  </div>
-                 <div className="image-display">
+                   {currentImage?.imageId &&
+                    <div className="image-display">
                     <img src={configUrl + "/showImageById.mvc?imageId=" + currentImage?.imageId + "&isThumbnail=n"}/>
-                 </div>
+                 </div>}
                  <div className="image-description">{currentImage?.description}</div>
                  </div>
             </section>

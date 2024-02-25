@@ -1,6 +1,9 @@
 import {MenuItemType} from "../models/menuItemType";
 
 export default function retrieveMenuItem (myMenuItems: MenuItemType[], currentMenuItemId:number) : MenuItemType | undefined {
+    if (!myMenuItems){
+        return undefined;
+    }
     for (let menuItem of myMenuItems){
         if (menuItem.id == currentMenuItemId){
             return menuItem;
