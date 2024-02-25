@@ -1,6 +1,10 @@
-import {MenuItemProps} from '@/app/models/models';
 import Link from "next/link";
 import {useGlobalContext} from "@/app/context/store";
+import {MenuItemType} from "@/app/models/menuItemType";
+
+type MenuItemProps = {
+    menuItem: MenuItemType | undefined;
+}
 
 const MenuItem  = ({ menuItem }: MenuItemProps) => {
     const {selectedMenuItem, setSelectedMenuItem} = useGlobalContext();
