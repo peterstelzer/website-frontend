@@ -1,16 +1,18 @@
 'use client'
 
-import useComments from "../hooks/useComments";
 import {SyntheticEvent, useState} from "react";
 import {CommentType} from "../hooks/useMenuItems";
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-export interface CommentProps {
+import {SnackbarContent} from "@mui/material";
+
+type CommentProps = {
     selectedMenuItemId: number;
+    addComment: (comment: CommentType) => void;
 }
 
-const AddComment = ({ selectedMenuItemId }: CommentProps ) => {
+const AddComment = ({ selectedMenuItemId, addComment}: CommentProps ) => {
     const emptyComment:CommentType = {
         menuItemId: selectedMenuItemId,
         commenterName: "",
@@ -20,7 +22,6 @@ const AddComment = ({ selectedMenuItemId }: CommentProps ) => {
     };
 
     const [comment, setComment] = useState(emptyComment);
-    const {addComment} = useComments(selectedMenuItemId || 0);
     const  [open, setOpen] = useState(false);
     const submit = () => {
         addComment(comment);
@@ -35,7 +36,6 @@ const AddComment = ({ selectedMenuItemId }: CommentProps ) => {
     };
 
     const action = (
-        <>
             <IconButton
                 size="small"
                 aria-label="close"
@@ -43,7 +43,6 @@ const AddComment = ({ selectedMenuItemId }: CommentProps ) => {
                 onClick={handleClose}>
                 <CloseIcon fontSize="small" />
             </IconButton>
-        </>
     );
 
     return (
@@ -61,8 +60,13 @@ const AddComment = ({ selectedMenuItemId }: CommentProps ) => {
                     open={open}
                     autoHideDuration={6000}
                     onClose={handleClose}
-                    message="Your comment has been saved."
-                    action={action}/>
+                    action={action}>
+                    <SnackbarContent
+                        style={{ backgroundColor:'green',}}
+                        message={<span id="client-snackbar">Your comment has been saved. Please look for your comment to be displayed shortly.</span>}
+                        action={action}
+                    />
+                    </Snackbar>
             </div>
         </>);
 }

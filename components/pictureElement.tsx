@@ -3,7 +3,7 @@ import {useGlobalContext} from "@/app/context/store";
 import Link from "next/link";
 
 
-export interface PictureElementProps {
+type PictureElementProps = {
     image: ImageDetails;
 }
 
