@@ -30,7 +30,7 @@ const MenuItem  = ({ menuItem }: MenuItemProps) => {
                 <Link href={'/menuId/'+menuItem?.id} className={ clasz } onClick={() => setSelectedMenuItem(menuItem)}> {menuItem?.name} </Link>
             </li>
             { ((menuItem?.id) == (selectedMenuItem?.id)  || isAChildSelected) &&
-                menuItem && menuItem.children.map(menu =>
+                menuItem?.children.map(menu =>
                 <MenuItem key={menu.id} menuItem={menu} />)
             }
         </>
