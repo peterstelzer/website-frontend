@@ -1,6 +1,6 @@
 import {CommentType} from "../hooks/useMenuItems";
 
-export interface CommentListProps {
+type CommentListProps = {
     comments: CommentType[];
 }
 

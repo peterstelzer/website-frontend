@@ -6,6 +6,7 @@ import {CommentType} from "../hooks/useMenuItems";
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+
 export interface CommentProps {
     selectedMenuItemId: number;
 }
@@ -35,15 +36,13 @@ const AddComment = ({ selectedMenuItemId }: CommentProps ) => {
     };
 
     const action = (
-        <>
-            <IconButton
-                size="small"
-                aria-label="close"
-                color="inherit"
-                onClick={handleClose}>
-                <CloseIcon fontSize="small" />
-            </IconButton>
-        </>
+        <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}>
+            <CloseIcon fontSize="small"/>
+        </IconButton>
     );
 
     return (

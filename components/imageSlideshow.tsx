@@ -5,7 +5,7 @@ import retrieveMenuItem from "@/app/util/functions";
 import {LoadingState} from "@/app/models/models";
 import Spinner from "./Spinner";
 
-export interface ImageSlideshowProps {
+type ImageSlideshowProps = {
     currentMenuId: number | undefined;
     currentImageIndex: number | undefined;
 }
@@ -50,7 +50,7 @@ const ImageSlideshow  = ({ currentMenuId, currentImageIndex}: ImageSlideshowProp
                  </div>
                    {currentImage?.imageId &&
                     <div className="image-display">
-                    <img src={configUrl + "/showImageById.mvc?imageId=" + currentImage?.imageId + "&isThumbnail=n"}/>
+                    <img src={configUrl + "/showImageById.mvc?imageId=" + currentImage?.imageId + "&isThumbnail=n"} alt={currentImage.description}/>
                  </div>}
                  <div className="image-description">{currentImage?.description}</div>
                  </div>

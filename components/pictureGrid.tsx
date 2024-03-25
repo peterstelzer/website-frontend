@@ -5,7 +5,7 @@ import {useGlobalContext} from "@/app/context/store";
 import {LoadingState} from "@/app/models/models";
 import Spinner from "./Spinner";
 
-export interface PictureGridProps {
+type PictureGridProps = {
     content: ImagePaneDetailsType | undefined;
     loadingState: LoadingState
 }
@@ -21,7 +21,7 @@ const PictureGrid = ({content, loadingState}:PictureGridProps) => {
                     </div>
                 </section>
                 <section className="pictureGrid">
-                    {content?.images && content.images.map(image => (
+                    {content?.images?.map(image => (
                         <PictureElement key={image.imageId} image={image}/>
                     ))}
                 </section>
