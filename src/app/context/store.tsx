@@ -5,7 +5,7 @@ import {MenuItemType} from "@/app/models/menuItemType";
 import useMenuItems from "../../../hooks/useMenuItems";
 import {LoadingState} from "@/app/models/models";
 
-interface ContextProps {
+type ContextProps = {
     menuItems : MenuItemType[],
     selectedMenuItem: MenuItemType | any,
     setSelectedMenuItem: Dispatch<SetStateAction<MenuItemType>> | any,
