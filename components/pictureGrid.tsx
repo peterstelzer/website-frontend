@@ -22,7 +22,7 @@ const PictureGrid = ({content, loadingState}:PictureGridProps) => {
                     </div>
                 </section>
                 <section className="pictureGrid">
-                    {content?.images && content.images.map(image => (
+                    {content?.images?.map(image => (
                         <PictureElement key={image.imageId} image={image}/>
                     ))}
                 </section>
