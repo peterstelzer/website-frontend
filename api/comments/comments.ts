@@ -12,8 +12,7 @@ export async function getComments(selectedMenuItemId: number): Promise<CommentDe
             "Authorization": "Basic " + apiKey
         }
     });
-    const commentsCollection = await response.json();
-    return commentsCollection.comments;
+    return await response.json();
 }
 
 export async function saveComments(comment: CommentType): Promise<void> {
