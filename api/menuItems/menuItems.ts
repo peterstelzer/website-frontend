@@ -16,7 +16,7 @@ export async function getMenuItems(): Promise<MenuItemType[]> {
 
 export async function getMenuItemContent(selectedMenuItem: MenuItemType | undefined): Promise<ImagePaneDetailsType> {
     const configUrl = process.env.NEXT_PUBLIC_CONFIG_URL ? process.env.NEXT_PUBLIC_CONFIG_URL : "http://localhost:8000";
-    const url = configUrl + "/api/menuItemContent?menuItemId="+selectedMenuItem?.id;
+    const url = configUrl + "/api/menuItemContent?menuItemContentId="+selectedMenuItem?.id;
     const apiKey = process.env.NEXT_PUBLIC_BASIC_AUTH_CREDS ? process.env.NEXT_PUBLIC_BASIC_AUTH_CREDS : "N/A";
     const response:void | Response = await fetch(url, {
         headers: {

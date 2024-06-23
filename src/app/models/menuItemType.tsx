@@ -4,5 +4,4 @@ export type MenuItemType = {
     name: string;
     children: MenuItemType[];
     hasParent?: boolean;
-    numberOfImages: number;
 }

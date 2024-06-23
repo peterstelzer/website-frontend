@@ -50,7 +50,7 @@ const ImageSlideshow  = ({ currentMenuId, currentImageIndex}: ImageSlideshowProp
                  </div>
                    {currentImage?.imageId &&
                     <div className="image-display">
-                    <img src={configUrl + "/showImageById.mvc?imageId=" + currentImage?.imageId + "&isThumbnail=n"} alt={currentImage.imageCaption}/>
+                    <img src={configUrl + "/showImageById?imageId=" + currentImage?.imageId + "&isThumbnail=n"} alt={currentImage.imageCaption}/>
                  </div>}
                  <div className="image-description">{currentImage?.description}</div>
                  </div>
