@@ -17,7 +17,7 @@ const PictureElement  = ({ image }: PictureElementProps) => {
            <div className="pictureElement">
               <Link href={"/menuId/" + selectedMenuItem?.id+"/imageIndex/"+image.imageIndex}>
                   {image?.imageId ?
-                <img src={configUrl + "/showImageById.mvc?imageId=" + (image?.imageId) + "&isThumbnail=y"} alt=""/>
+                <img src={configUrl + "/showImageById?imageId=" + (image?.imageId) + "&isThumbnail=y"} alt=""/>
                   :
                   null}
               </Link>

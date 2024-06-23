@@ -7,7 +7,7 @@ import * as menuItemsApi from "../api/menuItems/menuItems"
 
 export type CommentType = {
     id: number;
-    menuItemId: number;
+    menuItemContentId: number;
     comment: string;
     commenterName: string;
     enteredDate: string;
