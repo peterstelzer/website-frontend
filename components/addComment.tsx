@@ -14,7 +14,7 @@ type CommentProps = {
 
 const AddComment = ({ selectedMenuItemId, addComment}: CommentProps ) => {
     const emptyComment:CommentType = {
-        menuItemId: selectedMenuItemId,
+        menuItemContentId: selectedMenuItemId,
         commenterName: "",
         comment: "",
         enteredDate: "",
