@@ -14,8 +14,8 @@ type ContextProps = {
 
 const GlobalContext = createContext<ContextProps>({
     menuItems: [],
-    selectedMenuItem: { id : 0, index: 0, name: "", children: [], hasParent:false,numberOfImages: 0 },
-    setSelectedMenuItem: (): MenuItemType =>  { return {id : 0, index: 0, name: "", children: [], hasParent:false,numberOfImages: 0 }},
+    selectedMenuItem: { id : 0, index: 0, name: "", children: [], hasParent:false },
+    setSelectedMenuItem: (): MenuItemType =>  { return {id : 0, index: 0, name: "", children: [], hasParent:false }},
     loadingState: LoadingState.Loading
 })
 
