@@ -16,21 +16,22 @@ export type CommentType = {
 const useMenuItems = () => {
     const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
     const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItemType>();
-    const [loadingState, setLoadingState] = useState<LoadingState>(LoadingState.Loading)
+    const [loadingState, setLoadingState] = useState<LoadingState>(LoadingState.Loading);
+    const [version, setVersion] = useState<number>(0);
 
     useEffect(() => {
-        const fetchMenuItems = async () => {
+        const fetchMenuItems = async (version: number) => {
             setLoadingState(LoadingState.Loading);
             try {
-                await menuItemsApi.getMenuItems().then((response) => setMenuItems(response));
+                await menuItemsApi.getMenuItems(version).then((response) => setMenuItems(response));
             } catch {
                 setLoadingState(LoadingState.Error)
             }
             setLoadingState(LoadingState.Loaded)
         }
-        fetchMenuItems();
-    }, []);
-    return {menuItems, setMenuItems, selectedMenuItem, setSelectedMenuItem, loadingState };
+        fetchMenuItems(version);
+    }, [version]);
+    return {menuItems, setMenuItems, selectedMenuItem, setSelectedMenuItem, setVersion, loadingState };
 
 }
 

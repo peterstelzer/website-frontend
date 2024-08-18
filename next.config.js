@@ -3,7 +3,6 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-module.exports = nextConfig
 
 module.exports = {
   async redirects() {
@@ -16,5 +15,4 @@ module.exports = {
       }
     ]
   },
-  output: "standalone",
 }
