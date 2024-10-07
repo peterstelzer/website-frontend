@@ -31,7 +31,7 @@ const useMenuItems = () => {
         }
         fetchMenuItems(version);
     }, [version]);
-    return {menuItems, setMenuItems, selectedMenuItem, setSelectedMenuItem, setVersion, loadingState };
+    return {menuItems, setMenuItems, selectedMenuItem, setSelectedMenuItem, version, setVersion, loadingState };
 
 }
 

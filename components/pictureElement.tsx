@@ -10,12 +10,12 @@ type PictureElementProps = {
 
 const PictureElement  = ({ image }: PictureElementProps) => {
     const configUrl = process.env.NEXT_PUBLIC_CONFIG_URL ? process.env.NEXT_PUBLIC_CONFIG_URL : "http://localhost:8000";
-    const { selectedMenuItem } = useGlobalContext();
+    const { selectedMenuItem, version } = useGlobalContext();
 
     
     return (
            <div className="pictureElement">
-              <Link href={"/menuId/" + selectedMenuItem?.id+"/imageIndex/"+image.imageIndex}>
+               <Link href={"/menuId/" + selectedMenuItem?.id+"/imageIndex/"+image.imageIndex + (version != 0 ? ("?versionId="+version) : "")}>
                   {image?.imageId ?
                 <img src={configUrl + "/showImageById?imageId=" + (image?.imageId) + "&isThumbnail=y"} alt=""/>
                   :

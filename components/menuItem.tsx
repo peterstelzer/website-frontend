@@ -7,7 +7,7 @@ type MenuItemProps = {
 }
 
 const MenuItem  = ({ menuItem }: MenuItemProps) => {
-    const {selectedMenuItem, setSelectedMenuItem} = useGlobalContext();
+    const {selectedMenuItem, setSelectedMenuItem, version} = useGlobalContext();
 
     let clasz:string = '';
     if (selectedMenuItem && menuItem){
@@ -27,7 +27,7 @@ const MenuItem  = ({ menuItem }: MenuItemProps) => {
     return (
         <>
             <li>
-                <Link href={'/menuId/'+menuItem?.id} className={ clasz } onClick={() => setSelectedMenuItem(menuItem)}> {menuItem?.name} </Link>
+                <Link href={'/menuId/'+menuItem?.id + (version != 0 ? ('?versionId=' + version) : '')} className={ clasz } onClick={() => setSelectedMenuItem(menuItem)}> {menuItem?.name} </Link>
             </li>
             { ((menuItem?.id) == (selectedMenuItem?.id)  || isAChildSelected) &&
                 menuItem?.children.map(menu =>

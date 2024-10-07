@@ -9,6 +9,7 @@ type ContextProps = {
     menuItems : MenuItemType[],
     selectedMenuItem: MenuItemType | any,
     setSelectedMenuItem: Dispatch<SetStateAction<MenuItemType>> | any,
+    version: number,
     setVersion: Dispatch<SetStateAction<number>> | any,
     loadingState: LoadingState
 }
@@ -16,6 +17,7 @@ type ContextProps = {
 const GlobalContext = createContext<ContextProps>({
     menuItems: [],
     selectedMenuItem: { id : 0, index: 0, name: "", children: [], hasParent:false },
+    version: 0,
     setVersion: () : number => 0,
     setSelectedMenuItem: (): MenuItemType =>  { return {id : 0, index: 0, name: "", children: [], hasParent:false }},
     loadingState: LoadingState.Loading
@@ -23,11 +25,11 @@ const GlobalContext = createContext<ContextProps>({
 
 // @ts-ignore
 export const GlobalContextProvider = ({ children }) => {
-    const {menuItems, selectedMenuItem, setVersion, setSelectedMenuItem, loadingState} = useMenuItems();
+    const {menuItems, selectedMenuItem, version, setVersion, setSelectedMenuItem, loadingState} = useMenuItems();
 
     return (
-        <GlobalContext.Provider value={{ menuItems, selectedMenuItem, setSelectedMenuItem, setVersion, loadingState}} >
-            {children}
+        <GlobalContext.Provider value={{ menuItems, selectedMenuItem, setSelectedMenuItem, version, setVersion, loadingState}} >
+            {children}version,
         </GlobalContext.Provider>
     )
 }
