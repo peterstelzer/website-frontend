@@ -29,7 +29,7 @@ export const GlobalContextProvider = ({ children }) => {
 
     return (
         <GlobalContext.Provider value={{ menuItems, selectedMenuItem, setSelectedMenuItem, version, setVersion, loadingState}} >
-            {children}version,
+            {children}
         </GlobalContext.Provider>
     )
 }
