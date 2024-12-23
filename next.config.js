@@ -10,7 +10,7 @@ module.exports = {
       // Basic redirect
       {
         source: '/',
-        destination: '/menuId/1',
+        destination: '/menuId/0',
         permanent: true,
       }
     ]
