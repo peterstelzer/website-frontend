@@ -12,12 +12,12 @@ type ImageSlideshowProps = {
 
 const ImageSlideshow  = ({ currentMenuId, currentImageIndex}: ImageSlideshowProps) => {
 
-    const { menuItems } = useGlobalContext();
+    const { menuItems, version } = useGlobalContext();
     function matchesImageIndex (element: { imageIndex: number; }){
         return Number(currentImageIndex)==element.imageIndex;
     }
     const currentMenuItem= retrieveMenuItem(menuItems, currentMenuId ?? 1);
-    const {content, loadingState } = useMenuItemContent(currentMenuItem);
+    const {content, loadingState } = useMenuItemContent(currentMenuItem, version);
     const currentImage = content?.images.filter(matchesImageIndex)[0];
 
 
@@ -36,14 +36,14 @@ const ImageSlideshow  = ({ currentMenuId, currentImageIndex}: ImageSlideshowProp
                <div className="containerVertical">
                   <div className="imagePageNavigation">
                      <div>
-                        <Link href={'/menuId/'+currentMenuId+"/imageIndex/"+previousImageIndex} >
+                        <Link href={'/menuId/'+currentMenuId+"/imageIndex/"+previousImageIndex + (version != 0 ? ("?versionId="+version) : "")} >
                            <i className="fas fa-arrow-circle-left" aria-hidden="true"></i>{' '}
                            Previous
                         </Link>
                     </div>
                     <div>Image <span>{(currentImageIndex ?? 0) + 1}</span> of <span>{imagesCount}</span> </div>
                     <div>
-                        <Link href={'/menuId/'+currentMenuId+"/imageIndex/"+nextImageIndex} >
+                        <Link href={'/menuId/'+currentMenuId+"/imageIndex/"+nextImageIndex +  (version != 0 ? ("?versionId="+version) : "")} >
                           Next <i className="fas fa-arrow-circle-right" aria-hidden="true"></i>
                        </Link>
                     </div>

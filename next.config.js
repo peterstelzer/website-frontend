@@ -3,7 +3,6 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-module.exports = nextConfig
 
 module.exports = {
   async redirects() {
@@ -11,10 +10,9 @@ module.exports = {
       // Basic redirect
       {
         source: '/',
-        destination: '/menuId/1',
+        destination: '/menuId/0',
         permanent: true,
       }
     ]
   },
-  output: "standalone",
 }
