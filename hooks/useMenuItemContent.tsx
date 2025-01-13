@@ -20,16 +20,17 @@ export type ImagePaneDetailsType = {
 }  
 
 
-const useMenuItemContent = (selectedMenuItem:MenuItemType | undefined ) => {
+const useMenuItemContent = (selectedMenuItem:MenuItemType | undefined, myVersionId: number ) => {
     const [content, setContent] = useState<ImagePaneDetailsType | undefined>(undefined);
     const [currentImageIndex, setCurrentImageIndex] = useState<number>();
     const [loadingState, setLoadingState] = useState<LoadingState>(LoadingState.Loading)
+    const [versionId] = useState(myVersionId);
 
     useEffect(() => {
       const fetchContent = async () => {
           setLoadingState(LoadingState.Loading)
           try{
-              menuItemsApi.getMenuItemContent(selectedMenuItem).then((response) => setContent(response));
+              menuItemsApi.getMenuItemContent(selectedMenuItem, versionId).then((response) => setContent(response));
               setLoadingState(LoadingState.Loaded);
           } catch {
               setLoadingState(LoadingState.Error)
